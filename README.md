@@ -1,5 +1,7 @@
 # Cherub Courier
 
+**Download page: https://rachelkph.github.io/cherub-courier/**
+
 A pixel-art cherub who flies above the macOS Dock and delivers twice-daily headlines.
 Everything runs on your Mac: no accounts, no tracking, no AI.
 

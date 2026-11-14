@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cherub Courier</title>
+<link rel="icon" type="image/png" href="img/icon.png">
+<meta property="og:title" content="Cherub Courier">
+<meta property="og:description" content="A pixel cherub who flies above your Mac's Dock and brings you the news, twice a day.">
+<meta property="og:image" content="https://rachelkph.github.io/cherub-courier/img/preview.png">
+<meta property="og:url" content="https://rachelkph.github.io/cherub-courier/">
+<meta name="twitter:card" content="summary">
+
+<meta name="description" content="A pixel cherub who flies above your Mac's Dock and brings you the news, twice a day.">
+<style>
+  /* Fonts served from this site (no Google Fonts request): OFL, see fonts/. */
+  @font-face { font-family: "Silkscreen"; src: url("fonts/Silkscreen-Regular.ttf") format("truetype"); font-display: swap; }
+  @font-face { font-family: "Libre Caslon Text"; src: url("fonts/LibreCaslonText-wght.ttf") format("truetype"); font-weight: 400 700; font-display: swap; }
+  :root {
+    --sky-top: #cfe4f8;
+    --sky-bottom: #fbefe2;
+    --paper: #f6eedb;
+    --paper-2: #efe4cb;
+    --ink: #2e1e26;
+    --navy: #302f52;
+    --muted: #5e4b44;
+    --coral: #b2606b;
+    --coral-ink: #fff7ea;
+    --rule: #3b2630;
+    --dock: rgba(255, 255, 255, 0.55);
+    --pixel: "Silkscreen", ui-monospace, monospace;
+    --serif: "Libre Caslon Text", Georgia, serif;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --sky-top: #1c2236; --sky-bottom: #3a3047; --paper: #262833; --paper-2: #2e3140;
+      --ink: #f0e3c4; --navy: #e6dcf2; --muted: #c4b79f; --coral: #e8ad7d; --coral-ink: #2a1d22;
+      --rule: #b8a98f; --dock: rgba(255, 255, 255, 0.12);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --sky-top: #1c2236; --sky-bottom: #3a3047; --paper: #262833; --paper-2: #2e3140;
+    --ink: #f0e3c4; --navy: #e6dcf2; --muted: #c4b79f; --coral: #e8ad7d; --coral-ink: #2a1d22;
+    --rule: #b8a98f; --dock: rgba(255, 255, 255, 0.12);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 18px/1.6 var(--serif); }
+  img.px { image-rendering: pixelated; }
+  .wrap { max-width: 980px; margin: 0 auto; padding-inline: 20px; }
+  h2 { font: 22px/1.2 var(--pixel); letter-spacing: 0.02em; color: var(--navy); margin: 0 0 14px; text-wrap: balance; }
+  p { margin: 0; }
+  .label { font: 12px/1.4 var(--pixel); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+
+  /* Pixel frame with stepped corners, as on the popover. */
+  .pixel-frame {
+    clip-path: polygon(4px 0, calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px, 100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%, 4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px), 0 4px, 2px 4px, 2px 2px, 4px 2px);
+  }
+
+  /* Hero: the sky, the nameplate, the button, and him flying over a Dock. */
+  .hero { background: linear-gradient(var(--sky-top), var(--sky-bottom)); padding-block: 56px 0; overflow: hidden; }
+  .hero .wrap { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px; }
+  .brand { display: flex; align-items: center; gap: 16px; }
+  .brand img { width: 72px; height: 72px; }
+  h1 { font: clamp(30px, 6vw, 52px)/1 var(--pixel); color: var(--navy); margin: 0; letter-spacing: 0.01em; }
+  .tagline { font-size: clamp(19px, 2.4vw, 23px); line-height: 1.45; max-width: 30ch; color: var(--ink); }
+  .download {
+    display: inline-flex; align-items: center; gap: 10px; margin-top: 6px; padding: 16px 28px;
+    background: var(--coral); color: var(--coral-ink); text-decoration: none; font: 18px/1 var(--pixel); letter-spacing: 0.03em;
+  }
+  .download:hover { filter: brightness(1.06); }
+  .download:focus-visible { outline: 3px solid var(--navy); outline-offset: 4px; }
+  .download svg { width: 18px; height: 18px; fill: currentColor; shape-rendering: crispEdges; }
+  .fine { font: 12px/1.5 var(--pixel); letter-spacing: 0.04em; color: var(--muted); }
+
+  /* He is drawn at exactly 2x his art (96 x 99), so his pixels stay square and crisp. */
+  .stage { position: relative; width: 100%; max-width: 760px; height: 270px; margin-top: 4px; }
+  .flier { position: absolute; bottom: 14px; left: 0; width: 192px; height: 252px; animation: fly 16s linear infinite; }
+  .flier .bob { position: absolute; left: 0; bottom: 40px; width: 192px; height: 198px; animation: bob 1.6s steps(4) infinite alternate; }
+  .flier .shadow { position: absolute; left: 50%; bottom: 0; width: 78px; height: 21px; margin-left: -39px; opacity: 0.55; animation: breathe 1.6s steps(4) infinite alternate; }
+  @keyframes fly {
+    0% { transform: translateX(0) scaleX(1); }
+    49.9% { transform: translateX(calc(min(760px, 100vw - 40px) - 192px)) scaleX(1); }
+    50% { transform: translateX(calc(min(760px, 100vw - 40px) - 192px)) scaleX(-1); }
+    99.9% { transform: translateX(0) scaleX(-1); }
+    100% { transform: translateX(0) scaleX(1); }
+  }
+  @keyframes bob { from { transform: translateY(0); } to { transform: translateY(-16px); } }
+  @keyframes breathe { from { transform: scale(1); opacity: 0.55; } to { transform: scale(0.8); opacity: 0.35; } }
+  @media (prefers-reduced-motion: reduce) {
+    .flier, .flier .bob, .flier .shadow { animation: none; }
+    .flier { left: 50%; margin-left: -96px; }
+  }
+
+  section { padding-block: 64px; }
+  section + section { border-top: 2px dotted var(--rule); }
+
+  /* Reading: popover screenshot beside the editions. */
+  .read { display: grid; grid-template-columns: minmax(0, 420px) minmax(0, 1fr); gap: 48px; align-items: center; }
+  .read img { width: 100%; height: auto; display: block; filter: drop-shadow(0 10px 24px rgba(46, 30, 38, 0.18)); }
+  .read .copy { display: flex; flex-direction: column; gap: 16px; }
+  .times { display: flex; gap: 12px; flex-wrap: wrap; }
+  .time { border: 2px solid var(--ink); padding: 8px 12px; font: 13px/1 var(--pixel); letter-spacing: 0.04em; }
+  @media (max-width: 760px) { .read { grid-template-columns: 1fr; gap: 28px; } }
+
+  /* Ignore him: the pile grows. */
+  .scenes { margin-top: 8px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .scene { background: var(--paper-2); padding: 22px 16px 18px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+  .scene .art { height: 150px; display: flex; align-items: flex-end; justify-content: center; }
+  .scene img { max-height: 150px; max-width: 100%; width: auto; }
+  .scene p { font-size: 16px; line-height: 1.45; }
+  @media (max-width: 640px) { .scenes { grid-template-columns: 1fr; } }
+
+  /* Topics as popover chips. */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 16px; }
+  .chip { border: 2px solid var(--ink); padding: 6px 10px; font: 13px/1 var(--pixel); letter-spacing: 0.03em; }
+  .two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
+  @media (max-width: 760px) { .two { grid-template-columns: 1fr; gap: 40px; } }
+  .two p + p { margin-top: 12px; }
+
+  .install { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+
+  footer { padding-block: 28px 40px; border-top: 2px solid var(--rule); }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+  footer a { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brand">
+      <img src="img/icon.png" alt="" width="72" height="72">
+      <h1>Cherub Courier</h1>
+    </div>
+    <p class="tagline">A pixel cherub who brings you the news, twice a day.</p>
+    <a class="download pixel-frame" href="https://github.com/rachelkph/cherub-courier/releases/latest/download/CherubCourier.dmg">
+      <svg viewBox="0 0 9 9" aria-hidden="true"><path d="M3 0h3v4h2v1H7v1H6v1H5v1H4V7H3V6H2V5H1V4h2z"/></svg>
+      Download for Mac
+    </a>
+    <p class="fine">Free · macOS 12 or later</p>
+    <div class="stage" aria-hidden="true">
+      <div class="flier">
+        <img class="px bob" id="flier" src="img/fly-0.png" alt="" width="192" height="198">
+        <img class="px shadow" src="img/shadow.png" alt="" width="78" height="21">
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="wrap read">
+      <img src="img/popover.png" data-dark="img/popover-dark.png" alt="The Cloud Nine Chronicle: the popover with a top story and headlines by topic, each stamped with its time" width="420" height="613">
+      <div class="copy">
+        <span class="label">The Cloud Nine Chronicle</span>
+        <h2>Click him to read the news</h2>
+        <p>A few fresh headlines from sources you choose, every morning and evening.</p>
+        <div class="times"><span class="time">8 AM</span><span class="time">6 PM</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ignore">
+    <div class="wrap">
+      <span class="label">If you ignore him</span>
+      <h2>The papers pile up</h2>
+      <div class="scenes">
+        <div class="scene"><div class="art"><img class="px" src="img/scene-pile.png" alt="The cherub resting on a stack of newspapers" width="261" height="369"></div><p>Waiting</p></div>
+        <div class="scene"><div class="art"><img class="px" src="img/scene-asleep.png" alt="The cherub asleep on the pile with floating z's" width="261" height="366"></div><p>Asleep</p></div>
+        <div class="scene"><div class="art"><img class="px" src="img/scene-buried.png" alt="The cherub buried up to his neck in newspapers" width="402" height="291"></div><p>Buried</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap two">
+      <div>
+        <span class="label">Your sources</span>
+        <h2>Pick what you want to hear about</h2>
+        <div class="chips">
+          <span class="chip">US news</span><span class="chip">World news</span><span class="chip">AI and tech</span><span class="chip">Business</span>
+          <span class="chip">Science</span><span class="chip">Film and TV</span><span class="chip">Music</span><span class="chip">Gaming</span>
+          <span class="chip">Sports</span><span class="chip">Books</span><span class="chip">Design</span><span class="chip">Creative coding</span>
+        </div>
+        <p>Recommended sources for every topic, or add any RSS feed.</p>
+      </div>
+      <div>
+        <span class="label">Private</span>
+        <h2>It all stays on your Mac</h2>
+        <p>No account, no tracking, no ads, no AI.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap install">
+      <h2>Install</h2>
+      <p>Open the download, drag the cherub into Applications, and open him.</p>
+      <a class="download pixel-frame" href="https://github.com/rachelkph/cherub-courier/releases/latest/download/CherubCourier.dmg">
+        <svg viewBox="0 0 9 9" aria-hidden="true"><path d="M3 0h3v4h2v1H7v1H6v1H5v1H4V7H3V6H2V5H1V4h2z"/></svg>
+        Download for Mac
+      </a>
+      <p class="fine">Updates itself</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="fine">Cherub Courier by Rachel Pham</span>
+    <span class="fine"><a href="https://github.com/rachelkph/cherub-courier">Source on GitHub</a> · <a href="https://github.com/rachelkph/cherub-courier/blob/main/PRIVACY.md">Privacy</a> · <a href="https://github.com/rachelkph/cherub-courier/releases">All versions</a></span>
+  </div>
+</footer>
+
+<script>
+  // Flap: cycle his four flying frames (skipped when reduced motion is on).
+  const flier = document.getElementById("flier");
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let f = 0;
+  setInterval(() => {
+    if (still.matches) return;
+    f = (f + 1) % 4;
+    flier.src = `img/fly-${f}.png`;
+  }, 140);
+  // The popover screenshot follows the theme.
+  const shot = document.querySelector("img[data-dark]");
+  const dark = window.matchMedia("(prefers-color-scheme: dark)");
+  const pick = () => {
+    const t = document.documentElement.dataset.theme;
+    shot.src = (t ? t === "dark" : dark.matches) ? shot.dataset.dark : "img/popover.png";
+  };
+  pick();
+  dark.addEventListener("change", pick);
+  new MutationObserver(pick).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+</script>
+</body>
+</html>
