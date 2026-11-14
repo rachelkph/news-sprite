@@ -1,0 +1,175 @@
+{
+ "nameplate": "The Cloud Nine Chronicle",
+ "edition": "Morning",
+ "dateLabel": "Sat, Nov 14",
+ "newLabel": "7 new",
+ "countLabel": "11 stories",
+ "lead": {
+  "key": "https://www.bbc.co.uk/news/articles/cmq5vd1wdgz6o?at_medium=RSS&at_campaign=rss",
+  "headline": "Scandal-hit Nvidia CEO Jensen Huang quits, plunging AI chipmaking giant into turmoil",
+  "source": "BBC News: Top stories",
+  "alsoIn": 4,
+  "paywall": false,
+  "stamp": "Thu 9:39 PM",
+  "opened": false,
+  "fresh": true,
+  "topic": "ai-tech",
+  "topicLabel": "AI and tech"
+ },
+ "chips": [
+  {
+   "id": "all",
+   "label": "All"
+  },
+  {
+   "id": "us-news",
+   "label": "US"
+  },
+  {
+   "id": "world-news",
+   "label": "World"
+  },
+  {
+   "id": "ai-tech",
+   "label": "AI"
+  },
+  {
+   "id": "business-markets",
+   "label": "Business"
+  }
+ ],
+ "filter": "all",
+ "sections": [
+  {
+   "topic": "us-news",
+   "label": "US news",
+   "items": [
+    {
+     "key": "https://www.cnbc.com/2026/11/14/faa-ground-stop-flights-resume-delays.html",
+     "headline": "Flight disruptions continue after FAA lifts ground stop, some college football games delayed",
+     "source": "CNBC Top News",
+     "alsoIn": 0,
+     "paywall": false,
+     "stamp": "9:01 AM",
+     "opened": false,
+     "fresh": true
+    },
+    {
+     "key": "https://www.cnbc.com/2026/11/13/faa-ground-stop.html",
+     "headline": "FAA grounds departing flights nationwide, citing air traffic communication system outage",
+     "source": "CNBC Top News",
+     "alsoIn": 3,
+     "paywall": false,
+     "stamp": "Yest 5:41 PM",
+     "opened": false,
+     "fresh": true
+    },
+    {
+     "key": "https://www.npr.org/2026/11/13/nx-s1-6040388/what-we-know-about-the-faa-nationwide-ground-stop",
+     "headline": "What we know about the FAA nationwide ground stop",
+     "source": "NPR News",
+     "alsoIn": 0,
+     "paywall": false,
+     "stamp": "Yest 5:27 PM",
+     "opened": false,
+     "fresh": false
+    }
+   ],
+   "more": []
+  },
+  {
+   "topic": "world-news",
+   "label": "World news",
+   "items": [
+    {
+     "key": "https://www.theguardian.com/environment/2026/nov/13/storm-charles-floods-flight-cancellations-southern-europe-weather",
+     "headline": "Storm Charles causes floods and flight cancellations across southern Europe",
+     "source": "The Guardian: World",
+     "alsoIn": 0,
+     "paywall": false,
+     "stamp": "Yest 3:49 AM",
+     "opened": false,
+     "fresh": true
+    },
+    {
+     "key": "https://www.theguardian.com/australia-news/2026/nov/14/us-bound-flights-out-of-australia-grounded-as-telecommunications-outage-affects-american-travel",
+     "headline": "US-bound flights out of Australia delayed after telecommunications outage grounded American planes",
+     "source": "The Guardian: World",
+     "alsoIn": 0,
+     "paywall": false,
+     "stamp": "Yest 11:56 PM",
+     "opened": false,
+     "fresh": false
+    }
+   ],
+   "more": []
+  },
+  {
+   "topic": "ai-tech",
+   "label": "AI and tech",
+   "items": [
+    {
+     "key": "https://techcrunch.com/2026/11/13/nvidia-ceo-jensen-huangs-affair-with-alleged-chinese-spy-a-timeline/",
+     "headline": "The unfolding Jensen Huang scandal: a timeline",
+     "source": "TechCrunch: AI",
+     "alsoIn": 0,
+     "paywall": false,
+     "stamp": "Yest 10:58 AM",
+     "opened": false,
+     "fresh": true
+    },
+    {
+     "key": "https://www.wired.com/story/jensen-huang-and-the-end-of-the-founder-fairy-tale/",
+     "headline": "Jensen Huang and the End of the Founder Fairy Tale",
+     "source": "WIRED: AI",
+     "alsoIn": 0,
+     "paywall": false,
+     "stamp": "Yest 11:00 AM",
+     "opened": false,
+     "fresh": false
+    },
+    {
+     "key": "https://arstechnica.com/tech-policy/2026/11/ceo-jensen-huang-admits-affair-as-nvidia-probes-possible-chinese-espionage/",
+     "headline": "Nvidia CEO's affair becomes a national security problem",
+     "source": "Ars Technica: AI",
+     "alsoIn": 0,
+     "paywall": false,
+     "stamp": "Mon 10:23 AM",
+     "opened": false,
+     "fresh": false
+    }
+   ],
+   "more": []
+  },
+  {
+   "topic": "business-markets",
+   "label": "Business and markets",
+   "items": [
+    {
+     "key": "https://www.cnbc.com/2026/11/13/nvidia-stock-jensen-affair-ai.html",
+     "headline": "Nvidia stock suffers longest weekly losing streak since 2012 as market value sinks by $1.7 trillion",
+     "source": "CNBC Top News",
+     "alsoIn": 0,
+     "paywall": false,
+     "stamp": "Yest 5:18 PM",
+     "opened": false,
+     "fresh": true
+    },
+    {
+     "key": "https://www.npr.org/2026/11/12/nx-s1-6038865/ceo-jensen-huang-resigns-from-chip-giant-nvidia",
+     "headline": "CEO Jensen Huang resigns from chip giant Nvidia",
+     "source": "NPR Business",
+     "alsoIn": 0,
+     "paywall": false,
+     "stamp": "Thu 5:02 PM",
+     "opened": false,
+     "fresh": false
+    }
+   ],
+   "more": []
+  }
+ ],
+ "fetchedLabel": "Fetched 9:12 AM",
+ "empty": null,
+ "refreshing": false
+}

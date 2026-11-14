@@ -1,4 +1,5 @@
 import { app, BrowserWindow, dialog, ipcMain, Menu, nativeImage, nativeTheme, net, powerMonitor, protocol, screen, shell, systemPreferences, Tray } from "electron";
+import { readFileSync } from "node:fs";
 import { rm } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
@@ -34,6 +35,10 @@ const SERVED_DIRS: Record<string, string> = {
 if (app.isPackaged && (app.commandLine.hasSwitch("remote-debugging-port") || app.commandLine.hasSwitch("remote-debugging-pipe"))) {
   app.exit(1);
 }
+
+// Dev only: a demo edition for filming (`npm run demo`): the popover shows this file's
+// view instead of the feeds, a headline click opens its real link, setup is skipped.
+const DEMO_VIEW = !app.isPackaged ? process.env.NEWSCAT_DEMO_VIEW : undefined;
 
 // Dev only: run against a separate data folder (testing without touching real data).
 if (!app.isPackaged && process.env.NEWSCAT_USER_DATA) app.setPath("userData", process.env.NEWSCAT_USER_DATA);
@@ -330,6 +335,7 @@ function snooze(until: number): void {
 const clock = (t: number) => new Date(t).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
 
 function popoverView() {
+  if (DEMO_VIEW) return JSON.parse(readFileSync(DEMO_VIEW, "utf8"));
   const labels = topicLabels(settings, sourcesFile);
   const sources = editionSources(settings, sourcesFile);
   return buildView(state, {
@@ -360,6 +366,11 @@ function catOnScreen(box: unknown): { x: number; y: number; width: number; heigh
 registerPopoverIpc({
   view: popoverView,
   open: (key) => {
+    if (DEMO_VIEW) {
+      const link = safeUrl(key);
+      if (link) void shell.openExternal(link);
+      return;
+    }
     const found = linkFor(state, key);
     const link = found ? safeUrl(found) : null;
     if (!link) return;
@@ -578,7 +589,7 @@ app.whenReady().then(async () => {
   createTray();
   watchFullScreen();
   startUpdater(rebuildTrayMenu);
-  if (!settings.onboarded) openOnboarding(__dirname);
+  if (!settings.onboarded && !DEMO_VIEW) openOnboarding(__dirname);
   preparePopover(__dirname);
   // Unread headlines expire after 48h and the cat gets sleepier as editions pass.
   setInterval(updateCat, 10 * 60_000);

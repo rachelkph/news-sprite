@@ -7,6 +7,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.renderer.json && node scripts/copy-static.mjs",
     "dev": "npm run build && electron .",
+    "demo": "npm run build && NEWSCAT_USER_DATA=\"${TMPDIR:-/tmp}/cherub-courier-demo\" NEWSCAT_DEMO_VIEW=demo/2026-11-14.json NEWSCAT_DEV_STATE=6,0 electron .",
     "lint": "biome lint && tsc -p tsconfig.json --noEmit && tsc -p tsconfig.renderer.json --noEmit",
     "test": "node --test \"test/**/*.test.ts\"",
     "check-feeds": "node scripts/check-feeds.mjs",
