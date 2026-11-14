@@ -335,7 +335,13 @@ function snooze(until: number): void {
 const clock = (t: number) => new Date(t).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
 
 function popoverView() {
-  if (DEMO_VIEW) return JSON.parse(readFileSync(DEMO_VIEW, "utf8"));
+  if (DEMO_VIEW) {
+    // The chips filter the demo like the real front page: one topic, no top story.
+    const demo = JSON.parse(readFileSync(DEMO_VIEW, "utf8"));
+    const f = settings.popoverFilter;
+    if (f === "all" || !demo.sections.some((x: { topic: string }) => x.topic === f)) return { ...demo, filter: "all" };
+    return { ...demo, filter: f, lead: null, sections: demo.sections.filter((x: { topic: string }) => x.topic === f) };
+  }
   const labels = topicLabels(settings, sourcesFile);
   const sources = editionSources(settings, sourcesFile);
   return buildView(state, {
@@ -378,7 +384,8 @@ registerPopoverIpc({
     void saveAndShow(markOpened(state, key, Date.now()));
   },
   filter: (id) => {
-    settings = cleanSettings({ ...settings, popoverFilter: id }, sourcesFile);
+    // The demo's topics are not the (throwaway) settings' topics, so keep its chip as is.
+    settings = DEMO_VIEW ? { ...settings, popoverFilter: id } : cleanSettings({ ...settings, popoverFilter: id }, sourcesFile);
     void saveSettings(dataPaths().settings, settings);
     pushPopoverView(popoverView());
   },

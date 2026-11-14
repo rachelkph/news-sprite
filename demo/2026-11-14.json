@@ -2,8 +2,8 @@
  "nameplate": "The Cloud Nine Chronicle",
  "edition": "Morning",
  "dateLabel": "Sat, Nov 14",
- "newLabel": "7 new",
- "countLabel": "11 stories",
+ "newLabel": "9 new",
+ "countLabel": "17 stories",
  "lead": {
   "key": "https://www.bbc.co.uk/news/articles/cmq5vd1wdgz6o?at_medium=RSS&at_campaign=rss",
   "headline": "Scandal-hit Nvidia CEO Jensen Huang quits, plunging AI chipmaking giant into turmoil",
@@ -36,6 +36,14 @@
   {
    "id": "business-markets",
    "label": "Business"
+  },
+  {
+   "id": "science",
+   "label": "Science"
+  },
+  {
+   "id": "music",
+   "label": "Music"
   }
  ],
  "filter": "all",
@@ -162,6 +170,80 @@
      "alsoIn": 0,
      "paywall": false,
      "stamp": "Thu 5:02 PM",
+     "opened": false,
+     "fresh": false
+    }
+   ],
+   "more": []
+  },
+  {
+   "topic": "science",
+   "label": "Science",
+   "items": [
+    {
+     "key": "https://www.sciencedaily.com/releases/2026/11/261112230444.htm",
+     "headline": "Stanford scientists discover hidden brain signals that predict Alzheimer’s years before symptoms",
+     "source": "ScienceDaily: Top Science",
+     "alsoIn": 0,
+     "paywall": false,
+     "stamp": "7:25 AM",
+     "opened": false,
+     "fresh": true
+    },
+    {
+     "key": "https://arstechnica.com/science/2026/11/james-webb-telescope-finds-ice-older-than-the-star-it-orbits/",
+     "headline": "James Webb telescope finds ice older than the star it orbits",
+     "source": "Ars Technica: Science",
+     "alsoIn": 0,
+     "paywall": false,
+     "stamp": "7:15 AM",
+     "opened": false,
+     "fresh": true
+    },
+    {
+     "key": "https://www.sciencedaily.com/releases/2026/11/261112230447.htm",
+     "headline": "A giant icy world hiding beyond Pluto could be our sixth dwarf planet",
+     "source": "ScienceDaily: Top Science",
+     "alsoIn": 0,
+     "paywall": false,
+     "stamp": "6:58 AM",
+     "opened": false,
+     "fresh": false
+    }
+   ],
+   "more": []
+  },
+  {
+   "topic": "music",
+   "label": "Music",
+   "items": [
+    {
+     "key": "https://www.npr.org/2026/11/14/nx-s1-6040417/u2-carnaval-de-luz-album-review",
+     "headline": "Men on a mission: U2 is back, again. Are they cool this time?",
+     "source": "NPR Music",
+     "alsoIn": 0,
+     "paywall": false,
+     "stamp": "5:00 AM",
+     "opened": false,
+     "fresh": true
+    },
+    {
+     "key": "https://www.rollingstone.com/music/music-news/rock-and-roll-hall-of-fame-induction-ceremony-flights-1235658269/",
+     "headline": "Rock & Roll Hall of Fame Induction Ceremony to Kick Off as Planned Amid FAA Grounding Flights Debacle",
+     "source": "Rolling Stone: Music news",
+     "alsoIn": 0,
+     "paywall": false,
+     "stamp": "Yest 9:49 PM",
+     "opened": false,
+     "fresh": false
+    },
+    {
+     "key": "https://www.billboard.com/music/music-news/justin-bieber-surprise-cameo-finn-askew-la-show-1236382042/",
+     "headline": "Justin Bieber Pops Out at Rising British Star’s $30 Concert in L.A. in Surprise Cameo: ‘Who’s Gonna Pinch Me Then?’",
+     "source": "Billboard: Music news",
+     "alsoIn": 0,
+     "paywall": false,
+     "stamp": "Yest 5:58 PM",
      "opened": false,
      "fresh": false
     }
