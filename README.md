@@ -7,7 +7,7 @@ Status: in development (milestone M6 of `docs/BUILD_PLAN.md`). No public release
 
 ## Install
 
-1. Download `CherubCourier-<version>.dmg` from the [Releases](https://github.com/rachelkph/cherub-courier/releases) page.
+1. Download [CherubCourier.dmg](https://github.com/rachelkph/cherub-courier/releases/latest/download/CherubCourier.dmg) (always the newest version; older ones are on the [Releases](https://github.com/rachelkph/cherub-courier/releases) page).
 2. Open it and drag **Cherub Courier** to **Applications**.
 3. Open Cherub Courier from Applications. macOS asks once whether to open an app downloaded from
    the internet; choose Open. (Releases are signed and notarized by Apple.)

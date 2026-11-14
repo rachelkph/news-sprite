@@ -33,6 +33,7 @@ for d in cherub/fly_light cherub/fly_medium cherub/fly_heavy cherub/hover_light 
   [ -d "assets/$d" ] || { echo "Sprite folder assets/$d is missing; the app would ship without art." >&2; exit 1; }
 done
 node scripts/icon.mjs # the app icon, from the cherub's art
+npx electron scripts/dmg-background.mjs # the installer window's background
 
 npm run lint
 npm test
@@ -66,7 +67,10 @@ xcrun stapler validate "$unz/Cherub Courier.app"
 spctl --assess --type execute --verbose=2 "$unz/Cherub Courier.app"
 grep -q "^version: ${version}$" out/latest-mac.yml || { echo "out/latest-mac.yml is not for ${version}" >&2; exit 1; }
 
-files=("$dmg" "$dmg.sha256" "$zip" "$zip.blockmap" out/latest-mac.yml)
+# The same DMG under a fixed name, so this link always gets the newest version:
+# https://github.com/rachelkph/cherub-courier/releases/latest/download/CherubCourier.dmg
+cp "$dmg" out/CherubCourier.dmg
+files=("$dmg" "$dmg.sha256" out/CherubCourier.dmg "$zip" "$zip.blockmap" out/latest-mac.yml)
 if [ -n "${NO_PUBLISH:-}" ]; then
   echo "Ready (not published). Files for v${version}:"
   ls -1 "${files[@]}"
@@ -86,3 +90,4 @@ for f in "${files[@]}"; do
 done
 curl -fsSL "https://github.com/${REPO}/releases/download/v${version}/latest-mac.yml" | cmp -s - out/latest-mac.yml || { echo "latest-mac.yml on GitHub does not match the build" >&2; exit 1; }
 echo "Published: https://github.com/${REPO}/releases/tag/v${version}"
+echo "Download link (always the newest): https://github.com/${REPO}/releases/latest/download/CherubCourier.dmg"

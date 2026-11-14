@@ -34,12 +34,16 @@ her login keychain.
 3. `APPLE_KEYCHAIN_PROFILE=newscat-notary npm run release`
    - Refuses to start if this version is already released, or the code is not committed
      and pushed.
+   - Draws the app icon (`scripts/icon.mjs`) and the installer window's background
+     (`scripts/dmg-background.mjs`: sky, arrow from the app to Applications, "Drag the
+     cherub into Applications"); both stay out of git.
    - lint + tests, universal build, hardened runtime, signing, notarization and stapling
      of the app and the DMG, Gatekeeper checks (`spctl`) on the DMG, its app and the
      update zip's app, and a check that `latest-mac.yml` is for this version.
-   - Publishes GitHub release `v<version>` on the pushed commit with all five files:
-     the DMG and its `.sha256` (new installs), the update zip, its `.blockmap` and
-     `latest-mac.yml` (automatic updates). gh uploads them all before the release goes
+   - Publishes GitHub release `v<version>` on the pushed commit with six files: the DMG,
+     its `.sha256` and a copy named `CherubCourier.dmg` (new installs; the copy keeps
+     `…/releases/latest/download/CherubCourier.dmg` pointing at the newest version), the
+     update zip, its `.blockmap` and `latest-mac.yml` (automatic updates). gh uploads them all before the release goes
      public. Then it checks each file's size on GitHub and that `latest-mac.yml` matches.
    - `NO_PUBLISH=1` stops after the checks without publishing.
    Installed copies from 0.4.0 on find the release within about 6 hours, download it,

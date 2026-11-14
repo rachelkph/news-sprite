@@ -54,4 +54,19 @@ publish:
   releaseType: release
 dmg:
   sign: true # notarized and stapled by scripts/release.sh
+  # The installer window: background drawn by scripts/dmg-background.mjs (not in git);
+  # icons sit on its arrow (positions are icon centers, matching the script).
+  background: build/background.png # 1x: Finder showed a 1x+2x TIFF at double size (2026-11-14)
+  title: Cherub Courier ${version}
+  window:
+    width: 600
+    height: 400
+  iconSize: 96
+  contents:
+    - x: 150
+      y: 190
+    - x: 450
+      y: 190
+      type: link
+      path: /Applications
   artifactName: CherubCourier-${version}.dmg

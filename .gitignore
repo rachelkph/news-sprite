@@ -21,3 +21,4 @@ assets/cherub/*
 # The app icon is drawn from his art (scripts/icon.mjs), so it stays local too.
 build/icon.png
 build/icon.icns
+build/background.png

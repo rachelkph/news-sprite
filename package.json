@@ -11,7 +11,7 @@
     "test": "node --test \"test/**/*.test.ts\"",
     "check-feeds": "node scripts/check-feeds.mjs",
     "dist": "npm run build && electron-builder --mac",
-    "dist:adhoc": "npm run build && electron-builder --mac -c.mac.identity=- -c.mac.hardenedRuntime=false -c.mac.notarize=false -c.dmg.sign=false",
+    "dist:adhoc": "npm run build && electron scripts/dmg-background.mjs && electron-builder --mac -c.mac.identity=- -c.mac.hardenedRuntime=false -c.mac.notarize=false -c.dmg.sign=false",
     "release": "bash scripts/release.sh"
   },
   "license": "UNLICENSED",
