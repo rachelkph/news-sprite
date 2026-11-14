@@ -107,12 +107,12 @@
   @media (max-width: 760px) { .read { grid-template-columns: 1fr; gap: 28px; } }
 
   /* Ignore him: the pile grows. */
-  .scenes { margin-top: 8px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .scenes { margin-top: 8px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
   .scene { background: var(--paper-2); padding: 22px 16px 18px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
   .scene .art { height: 150px; display: flex; align-items: flex-end; justify-content: center; }
   .scene img { max-height: 150px; max-width: 100%; width: auto; }
   .scene p { font-size: 16px; line-height: 1.45; }
-  @media (max-width: 640px) { .scenes { grid-template-columns: 1fr; } }
+  @media (max-width: 760px) { .scenes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
   /* Topics as popover chips. */
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 16px; }
@@ -169,6 +169,7 @@
       <span class="label">If you ignore him</span>
       <h2>The papers pile up</h2>
       <div class="scenes">
+        <div class="scene"><div class="art"><img class="px" src="img/scene-carrying.png" alt="The cherub sweating as he flies with a bulging bag of newspapers" width="276" height="363"></div><p>Carrying</p></div>
         <div class="scene"><div class="art"><img class="px" src="img/scene-pile.png" alt="The cherub resting on a stack of newspapers" width="261" height="369"></div><p>Waiting</p></div>
         <div class="scene"><div class="art"><img class="px" src="img/scene-asleep.png" alt="The cherub asleep on the pile with floating z's" width="261" height="366"></div><p>Asleep</p></div>
         <div class="scene"><div class="art"><img class="px" src="img/scene-buried.png" alt="The cherub buried up to his neck in newspapers" width="402" height="291"></div><p>Buried</p></div>
