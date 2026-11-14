@@ -38,7 +38,7 @@ npm run dist:adhoc   # local test build in out/ (this Mac only)
 
 Releasing (signing, notarization, DMG): `docs/RELEASE.md`.
 
-Menu bar cherub icon: Hide/Show, Put to sleep/Wake (he sleeps on his pile until woken), Pause/Resume (he stays where he is), Snooze, Set up… (re-run setup), Reset everything… (deletes local data).
+Menu bar cherub icon: Hide/Show, Appearance (Match Mac/Light/Dark; also the sun/moon button in the popover), Put to sleep/Wake (he sleeps on his pile until woken), Pause/Resume (he stays where he is), Snooze, Set up… (re-run setup), Reset everything… (deletes local data).
 
 Dev-only controls (not in packaged builds):
 - Menu bar cherub icon > Dev: set the unread count and the oldest unread edition's age.

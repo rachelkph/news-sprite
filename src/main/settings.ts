@@ -31,7 +31,10 @@ export type Settings = {
   snoozeUntil: number; // ms since epoch; the cat is hidden until then (0 = not snoozed)
   paused: boolean; // he stays where he is (still visible and clickable) until resumed
   sleeping: boolean; // put to sleep from the menu bar: asleep until woken
+  appearance: Appearance; // light or dark popover and setup window, or follow the Mac
 };
+
+export type Appearance = "system" | "light" | "dark";
 
 // What a fresh install (or "skip setup") gets: default topics, but no sources,
 // because nothing is fetched until the user approves sources.
@@ -50,6 +53,7 @@ export function defaultSettings(): Settings {
     snoozeUntil: 0,
     paused: false,
     sleeping: false,
+    appearance: "system",
   };
 }
 
@@ -135,6 +139,7 @@ export function cleanSettings(raw: unknown, sources: SourcesFile): Settings {
     snoozeUntil: typeof raw.snoozeUntil === "number" && Number.isFinite(raw.snoozeUntil) && raw.snoozeUntil > 0 ? raw.snoozeUntil : 0,
     paused: raw.paused === true,
     sleeping: raw.sleeping === true,
+    appearance: raw.appearance === "light" || raw.appearance === "dark" ? raw.appearance : "system",
   };
 }
 

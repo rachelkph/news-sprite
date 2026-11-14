@@ -114,5 +114,5 @@ export function applyFinish(payload: unknown, file: SourcesFile, prev: Settings,
 // "Skip setup": a working app with no sources approved (nothing is fetched until
 // the user approves sources in Settings).
 export function applySkip(prev: Settings): Settings {
-  return { ...defaultSettings(), onboarded: true, launchAtLogin: prev.launchAtLogin, paused: prev.paused, sleeping: prev.sleeping };
+  return { ...defaultSettings(), onboarded: true, launchAtLogin: prev.launchAtLogin, paused: prev.paused, sleeping: prev.sleeping, appearance: prev.appearance };
 }

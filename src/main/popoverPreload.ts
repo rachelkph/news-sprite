@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld("popover", {
   filter: (id: string) => ipcRenderer.send("popover:filter", String(id)),
   refresh: () => ipcRenderer.send("popover:refresh"),
   settings: () => ipcRenderer.send("popover:settings"),
+  toggleTheme: () => ipcRenderer.send("popover:toggle-theme"),
   close: () => ipcRenderer.send("popover:close"),
   height: (h: number) => ipcRenderer.send("popover:height", Number(h)),
   onShow: (cb: (view: unknown) => void) => ipcRenderer.on("popover:show", (_e, v) => cb(v)),

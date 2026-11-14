@@ -1,4 +1,4 @@
-import { app, BrowserWindow, dialog, ipcMain, Menu, nativeImage, net, powerMonitor, protocol, screen, shell, systemPreferences, Tray } from "electron";
+import { app, BrowserWindow, dialog, ipcMain, Menu, nativeImage, nativeTheme, net, powerMonitor, protocol, screen, shell, systemPreferences, Tray } from "electron";
 import { rm } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
@@ -17,7 +17,7 @@ import { buildView, catInputs, clearPile, linkFor, markOpened } from "./popover/
 import { hidePopover, preparePopover, pushPopoverView, registerPopoverIpc, showPopover, togglePopover } from "./popover/window.ts";
 import { currentEdition, snoozeEnd } from "./schedule.ts";
 import { Scheduler } from "./scheduler.ts";
-import { cleanSettings, defaultSettings, editionSources, loadSettings, type Settings, saveSettings, topicLabels } from "./settings.ts";
+import { type Appearance, cleanSettings, defaultSettings, editionSources, loadSettings, type Settings, saveSettings, topicLabels } from "./settings.ts";
 import { checkLink } from "./sources/discover.ts";
 import { cleanRemoteCache, loadSources } from "./sources/load.ts";
 import type { SourcesFile } from "./sources/schema.ts";
@@ -302,6 +302,15 @@ function setPaused(paused: boolean): void {
   rebuildTrayMenu();
 }
 
+// Light or dark popover and setup window, or follow the Mac (Rachel, 2026-11-14).
+// The pages follow it through prefers-color-scheme.
+function setAppearance(appearance: Appearance): void {
+  settings = { ...settings, appearance };
+  void saveSettings(dataPaths().settings, settings);
+  nativeTheme.themeSource = appearance;
+  rebuildTrayMenu();
+}
+
 // Asleep: he sleeps (on his pile, or in the mound) until woken from the menu (Rachel, 2026-11-13).
 function setSleeping(sleeping: boolean): void {
   settings = { ...settings, sleeping };
@@ -375,6 +384,8 @@ registerPopoverIpc({
     hidePopover();
     openOnboarding(__dirname);
   },
+  // The popover's sun/moon button: flip to the other look (leaving "match the Mac").
+  toggleTheme: () => setAppearance(nativeTheme.shouldUseDarkColors ? "light" : "dark"),
   visibility: (visible) => overlay?.webContents.send("popover:visible", visible),
 });
 
@@ -507,6 +518,15 @@ function rebuildTrayMenu(): void {
       ...(settings.sleeping ? [] : [{ label: `${settings.paused ? "Resume" : "Pause"} ${CHARACTER.noun}`, click: () => setPaused(!settings.paused) }]),
       ...snoozeMenu(),
       { type: "separator" },
+      {
+        label: "Appearance",
+        submenu: ([["system", "Match Mac"], ["light", "Light"], ["dark", "Dark"]] as const).map(([a, label]) => ({
+          label,
+          type: "radio" as const,
+          checked: settings.appearance === a,
+          click: () => setAppearance(a),
+        })),
+      },
       { label: "Set up…", click: () => openOnboarding(__dirname) },
       ...(app.isPackaged
         ? updateMenuItems(updateState()).map((u) => ({
@@ -551,6 +571,7 @@ app.whenReady().then(async () => {
   serveAppProtocol();
   await loadSourcesList(false);
   settings = await loadSettings(dataPaths().settings, sourcesFile);
+  nativeTheme.themeSource = settings.appearance;
   state = await loadState(dataPaths().state);
   catState = devStartState() ?? catInputs(state, Date.now());
   createOverlay();

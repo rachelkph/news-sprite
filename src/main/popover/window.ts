@@ -16,6 +16,7 @@ export type PopoverHandlers = {
   filter: (id: string) => void;
   refresh: () => void;
   settings: () => void;
+  toggleTheme: () => void;
   visibility: (visible: boolean) => void;
 };
 
@@ -45,6 +46,7 @@ export function registerPopoverIpc(h: PopoverHandlers): void {
   on("popover:filter", (id) => typeof id === "string" && H().filter(id));
   on("popover:refresh", () => H().refresh());
   on("popover:settings", () => H().settings());
+  on("popover:toggle-theme", () => H().toggleTheme());
   on("popover:close", () => hidePopover());
   // The page reports its natural height whenever its content changes.
   on("popover:height", (h) => {

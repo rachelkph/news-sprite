@@ -328,6 +328,16 @@ describe("settings and setup", () => {
     assert.equal(applyFinish({ topics: ["music"], approvedSourceIds: [] }, file, prev, new Map()).paused, true, "finishing setup");
   });
 
+  it("remembers light or dark (else follows the Mac), through setup too", () => {
+    assert.equal(defaultSettings().appearance, "system");
+    assert.equal(cleanSettings({ appearance: "dark" }, file).appearance, "dark");
+    assert.equal(cleanSettings({ appearance: "light" }, file).appearance, "light");
+    assert.equal(cleanSettings({ appearance: "purple" }, file).appearance, "system");
+    const prev = { ...defaultSettings(), appearance: "dark" as const };
+    assert.equal(applySkip(prev).appearance, "dark");
+    assert.equal(applyFinish({ topics: ["music"], approvedSourceIds: [] }, file, prev, new Map()).appearance, "dark");
+  });
+
   it("remembers that he was put to sleep, through setup too", () => {
     assert.equal(defaultSettings().sleeping, false);
     assert.equal(cleanSettings({ sleeping: true }, file).sleeping, true);

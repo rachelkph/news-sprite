@@ -28,6 +28,7 @@ declare global {
       filter(id: string): void;
       refresh(): void;
       settings(): void;
+      toggleTheme(): void;
       close(): void;
       height(h: number): void;
       onShow(cb: (v: View) => void): void;
@@ -38,6 +39,7 @@ declare global {
 }
 
 const LIST_MAX = 430;
+const darkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 const card = document.getElementById("card") as HTMLElement;
 const frame = document.getElementById("frame") as HTMLElement;
 const root = document.documentElement;
@@ -131,7 +133,11 @@ function render(v: View): void {
 
   const refresh = button("btn", "", () => window.popover.refresh(), pixelIcon("refresh"), v.refreshing ? "Refreshing…" : "Refresh");
   refresh.disabled = v.refreshing;
-  const footer = el("footer", undefined, el("span", "fetched", v.fetchedLabel ?? ""), refresh, button("btn", "", () => window.popover.settings(), pixelIcon("settings"), "Settings"));
+  // Light/dark: the button shows what it switches to.
+  const dark = darkScheme.matches;
+  const theme = button("btn", dark ? "Switch to light" : "Switch to dark", () => window.popover.toggleTheme(), pixelIcon(dark ? "sun" : "moon"));
+  theme.title = dark ? "Light" : "Dark";
+  const footer = el("footer", undefined, el("span", "fetched", v.fetchedLabel ?? ""), refresh, button("btn", "", () => window.popover.settings(), pixelIcon("settings"), "Settings"), theme);
 
   const scroll = card.querySelector(".list")?.scrollTop ?? 0;
   card.replaceChildren(header, list, footer);
@@ -179,6 +185,10 @@ window.addEventListener("focus", () => {
   if (document.activeElement === document.body || document.activeElement === null) (document.getElementById("masthead") as HTMLElement | null)?.focus();
 });
 window.popover.onUpdate((v) => render(v));
+// The theme changed (from this button, the menu bar, or the Mac): redraw the button.
+darkScheme.addEventListener("change", () => {
+  if (lastView) render(lastView);
+});
 window.popover.onLayout(({ tailX, height }) => {
   root.style.setProperty("--tail-x", `${tailX}px`);
   // If the screen is too short, shrink the list so the whole popover fits.
